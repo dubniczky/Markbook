@@ -1,19 +1,17 @@
+// Core modules
 import fs from 'fs'
 import path from 'path'
-
+// Package modules
 import express from 'express'
 import ejs from 'ejs'
 import { marked } from 'marked'
 import sanitizeHtml from 'sanitize-html'
+// Custom modules
+import config from 'markbook/modules/config.js'
 
-import config from 'markbook/config.js'
-
-const port = 8080
-const publicFolder = 'public'
-const indexMarkdown = 'index.md'
 
 function loadView(name) {
-    return fs.readFileSync( path.join('views', (name + '.ejs')), 'utf-8' )
+    return fs.readFileSync( path.join('views', (name + config.templateType)), 'utf-8' )
 }
 
 const markdownView = loadView('markdown')
@@ -26,14 +24,14 @@ app.get('/*', (req, res) => {
     // File name has dot it it?
     if (url.split('/').at(-1).includes('.')) {
         // Serve static file
-        if (!fs.existsSync(path.join(publicFolder, url))) {
+        if (!fs.existsSync(path.join(config.publicFolder, url))) {
             return res.sendStatus(404)
         }
-        return res.sendFile(url, { root: publicFolder })
+        return res.sendFile(url, { root: config.publicFolder })
     }
     
     // Render markdown
-    const mdPath = path.join(publicFolder, url, indexMarkdown)
+    const mdPath = path.join(config.publicFolder, url, config.markdownIndex)
     if (!fs.existsSync(mdPath)) {
         return res.sendStatus(404)
     }
@@ -47,6 +45,6 @@ app.get('/*', (req, res) => {
     }))
 })
 
-app.listen(port, () => {
-    console.log(`Listening on port: ${port}`)
+app.listen(config.port, () => {
+    console.log(`Listening on port: ${config.port}`)
 })
