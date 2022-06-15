@@ -6,6 +6,8 @@ import ejs from 'ejs'
 import { marked } from 'marked'
 import sanitizeHtml from 'sanitize-html'
 
+import config from 'markbook/config.js'
+
 const port = 8080
 const publicFolder = 'public'
 const indexMarkdown = 'index.md'
