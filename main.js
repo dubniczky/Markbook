@@ -32,6 +32,10 @@ app.get('/*', (req, res) => {
     
     // Render markdown
     const mdPath = path.join(publicFolder, url, indexMarkdown)
+    if (!fs.existsSync(mdPath)) {
+        return res.sendStatus(404)
+    }
+    
     const md = fs.readFileSync(mdPath, 'utf-8')
     const mdhtml = sanitizeHtml( marked.parse(md) )
 
