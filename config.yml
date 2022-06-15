@@ -1,4 +1,5 @@
 port: 8080
+caching: true
 publicFolder: public
 markdownIndex: index.md
 templateType: .ejs

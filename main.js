@@ -15,6 +15,7 @@ const templates = {
 }
 
 const app = express()
+const markdownCache = {}
 
 app.get('/*', (req, res) => {
     const url = req.url
@@ -33,9 +34,31 @@ app.get('/*', (req, res) => {
     if (!fs.existsSync(mdPath)) {
         return res.sendStatus(404)
     }
+
+    // Load cached version if available and not modified since
+    let mdhtml = null
+    if (config.caching)
+    {
+        const ctime = fs.statSync(mdPath).ctimeMs
+        if (mdPath in markdownCache && ctime == markdownCache[mdPath].modified) {
+            mdhtml = markdownCache[mdPath].data
+            console.debug(`Loaded cached entry: ${mdPath}`)
+        }
+        else {
+            const md = fs.readFileSync(mdPath, 'utf-8')
+            mdhtml = sanitizeHtml( marked.parse(md) )
+            markdownCache[mdPath] = {
+                modified: ctime,
+                data: mdhtml
+            }
+            console.debug(`New cache entry created: ${mdPath} (${(mdhtml.length/1024).toFixed(2)}kb)`)
+        }
+    }
+    else {
+        const md = fs.readFileSync(mdPath, 'utf-8')
+        mdhtml = sanitizeHtml( marked.parse(md) )
+    }
     
-    const md = fs.readFileSync(mdPath, 'utf-8')
-    const mdhtml = sanitizeHtml( marked.parse(md) )
 
     res.contentType('html')
     res.send(ejs.render(templates.markdown, {
