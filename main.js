@@ -8,13 +8,11 @@ import { marked } from 'marked'
 import sanitizeHtml from 'sanitize-html'
 // Custom modules
 import config from 'markbook/modules/config.js'
+import template from 'markbook/modules/template.js'
 
-
-function loadView(name) {
-    return fs.readFileSync( path.join('views', (name + config.templateType)), 'utf-8' )
+const templates = {
+    markdown: template.load('markdown')
 }
-
-const markdownView = loadView('markdown')
 
 const app = express()
 
@@ -40,7 +38,7 @@ app.get('/*', (req, res) => {
     const mdhtml = sanitizeHtml( marked.parse(md) )
 
     res.contentType('html')
-    res.send(ejs.render(markdownView, {
+    res.send(ejs.render(templates.markdown, {
         md: mdhtml
     }))
 })
