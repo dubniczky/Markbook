@@ -45,7 +45,7 @@ app.get('/*', (req, res) => {
             console.debug(`Loaded cached entry: ${mdPath}`)
         }
         else {
-            const md = fs.readFileSync(mdPath, 'utf-8')
+            const md = fs.readFileSync(mdPath, config.markdownEncoding)
             mdhtml = sanitizeHtml( marked.parse(md) )
             markdownCache[mdPath] = {
                 modified: ctime,
@@ -55,7 +55,7 @@ app.get('/*', (req, res) => {
         }
     }
     else {
-        const md = fs.readFileSync(mdPath, 'utf-8')
+        const md = fs.readFileSync(mdPath, config.markdownEncoding)
         mdhtml = sanitizeHtml( marked.parse(md) )
     }
     

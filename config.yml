@@ -2,4 +2,5 @@ port: 8080
 caching: true
 publicFolder: public
 markdownIndex: index.md
+markdownEncoding: utf-8
 templateType: .ejs
