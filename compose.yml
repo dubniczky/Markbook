@@ -1,0 +1,14 @@
+# This is a docker compose file for NodeJS server deployments
+# Project: https://gitlab.com/richardnagy/container-environments/server-deployments
+
+version: '3'
+services:
+  nodejs:
+    container_name: nodejs
+    hostname: nodejs
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4000:8080
+    restart: unless-stopped
