@@ -24,6 +24,9 @@ app.get('/*', (req, res) => {
     // File name has dot it it?
     if (url.split('/').at(-1).includes('.')) {
         // Serve static file
+        if (!fs.existsSync(path.join(publicFolder, url))) {
+            return res.sendStatus(404)
+        }
         return res.sendFile(url, { root: publicFolder })
     }
     
