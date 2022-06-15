@@ -1,6 +1,29 @@
+# Main port for the server to listen on
+# This will be forwarded if used with a container
+# Default: 8080
 port: 8080
+
+# Cache markdown html files after first visit
+# Resets on file change, increases memory cost but significantly reduces wait time
+# Default: true
 caching: true
+
+# Relative folder path with the publicly facing files
+# Do not place any server-side source or configuration files there
+# Default: public
 publicFolder: public
+
+# Naming for the markdown index file in each folder
+# For example http//domain.com/a/b/ will load: public/a/b/index.md
+# Default: index.md
 markdownIndex: index.md
-markdownEncoding: utf-8
+
+# Encoding for the markdown files
+# Possible values: ascii, base64, hex, latin1, ucs2, utf16le, utf8
+# Default: utf8
+markdownEncoding: utf8
+
+# Template file extension to append to the name when loading
+# Do not modify this, unless you've changed the templating engine from ejs
+# Default: .ejs
 templateType: .ejs
