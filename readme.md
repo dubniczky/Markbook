@@ -16,6 +16,11 @@ By default, each rendered markdown file is cached and only recompiled if the fil
 
 Edit `config.yml` to change settings before deployment or container building.
 
+## Requirements
+
+This project uses `yarn` for package management.  
+Refer to [.nvmrc](./.nvmrc) for node version.
+
 ## Usage
 
 ### Container
