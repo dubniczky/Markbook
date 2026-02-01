@@ -2,12 +2,6 @@
 
 NodeJS server that renders markdown files to HTML and serves them
 
-## Support ❤️
-
-If you find the project useful, please consider supporting, or contributing.
-
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/dubniczky)
-
 ## Description
 
 This server treats `.md` files as if they were standard `.html` files, except it renders markdown before serving. The root is `/public` folder, so feel free to clear it, then add a `index.md` file to any folder, just as if you were using `index.html` files. Every other file type is served normally.
